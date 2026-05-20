@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Love — Sign Up</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --coral: #e8523a;
+      --coral-dark: #c93d25;
+      --coral-light: #f07060;
+      --cream: #fff8f3;
+      --white: #ffffff;
+      --purple: #5b4fcf;
+      --red-btn: #d63031;
+      --text-dark: #1a0a0e;
+      --shadow: rgba(0,0,0,0.25);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: var(--coral);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Floating hearts background */
+    .hearts-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .heart-float {
+      position: absolute;
+      bottom: -50px;
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: floatUp 6s ease-in infinite;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+      100% { transform: translateY(-110vh) rotate(20deg); opacity: 0; }
+    }
+
+    .card {
+      position: relative;
+      z-index: 2;
+      width: 340px;
+      background: var(--coral);
+      border-radius: 28px;
+      padding: 28px 24px 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      animation: slideUp 0.7s cubic-bezier(.22,1,.36,1) both;
+      border: 1.5px solid rgba(255,255,255,0.18);
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(60px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--white);
+      text-align: center;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      animation: fadeIn 0.9s 0.2s both;
+    }
+
+    /* Heart image area */
+    .heart-wrap {
+      position: relative;
+      height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 6px;
+      animation: fadeIn 0.9s 0.3s both;
+    }
+    .heart-img {
+      width: 160px;
+      height: 130px;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 24px rgba(180,0,0,0.5));
+      animation: heartbeat 2s ease-in-out infinite;
+    }
+    /* ============================================
+       YAHAN IMAGE CHANGE KARO — Heart image
+       Abhi placeholder SVG use ho raha hai
+       Apni red heart image ka path daal do:
+       <img src="images/heart.png" ...>
+       ============================================ */
+    @keyframes heartbeat {
+      0%,100% { transform: scale(1); }
+      14%     { transform: scale(1.08); }
+      28%     { transform: scale(1); }
+      42%     { transform: scale(1.05); }
+      56%     { transform: scale(1); }
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+      animation: fadeIn 0.7s both;
+    }
+    .form-group:nth-child(1) { animation-delay: 0.4s; }
+    .form-group:nth-child(2) { animation-delay: 0.5s; }
+    .form-group:nth-child(3) { animation-delay: 0.6s; }
+    .form-group:nth-child(4) { animation-delay: 0.7s; }
+    .form-group:nth-child(5) { animation-delay: 0.8s; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    input, select {
+      width: 100%;
+      padding: 11px 16px;
+      border-radius: 50px;
+      border: none;
+      background: rgba(255,255,255,0.92);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem;
+      color: #333;
+      outline: none;
+      transition: box-shadow 0.3s, background 0.3s;
+    }
+    input::placeholder { color: #888; }
+    input:focus, select:focus {
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.5);
+    }
+    select { color: #888; appearance: none; cursor: pointer; }
+    select.filled { color: #333; }
+
+    .error-msg {
+      color: #ffe0e0;
+      font-size: 0.72rem;
+      margin-top: 4px;
+      padding-left: 12px;
+      display: none;
+      font-weight: 500;
+    }
+    .error-msg.show { display: block; }
+    input.error { box-shadow: 0 0 0 2px #ff6b6b; }
+
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      animation: fadeIn 0.7s 0.9s both;
+    }
+    .btn {
+      flex: 1;
+      padding: 11px;
+      border-radius: 50px;
+      border: none;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      letter-spacing: 0.5px;
+    }
+    .btn:active { transform: scale(0.96); }
+    .btn-reset {
+      background: var(--purple);
+      color: var(--white);
+      box-shadow: 0 4px 15px rgba(91,79,207,0.4);
+    }
+    .btn-reset:hover { box-shadow: 0 6px 20px rgba(91,79,207,0.55); transform: translateY(-1px); }
+    .btn-submit {
+      background: var(--purple);
+      color: var(--white);
+      box-shadow: 0 4px 15px rgba(91,79,207,0.4);
+    }
+    .btn-submit:hover { box-shadow: 0 6px 20px rgba(91,79,207,0.55); transform: translateY(-1px); }
+
+    .login-link {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.75);
+      animation: fadeIn 0.7s 1s both;
+    }
+    .login-link a {
+      color: var(--white);
+      font-weight: 600;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    /* Success popup */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    .popup-overlay.show { display: flex; }
+    .popup-box {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 32px 28px;
+      text-align: center;
+      max-width: 300px;
+      width: 90%;
+      animation: popIn 0.4s cubic-bezier(.22,1,.36,1);
+    }
+    @keyframes popIn {
+      from { transform: scale(0.7); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .popup-icon { font-size: 3rem; margin-bottom: 12px; }
+    .popup-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--coral); margin-bottom: 8px; }
+    .popup-msg { font-size: 0.85rem; color: #555; line-height: 1.5; margin-bottom: 20px; }
+    .popup-btn {
+      background: var(--coral);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 10px 28px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .popup-btn:hover { background: var(--coral-dark); }
+  </style>
+</head>
+<body>
+
+<!-- Floating hearts background -->
+<div class="hearts-bg" id="heartsBg"></div>
+
+<div class="card">
+  <h1>Sign Up for LOVE</h1>
+
+  <!-- Heart Image -->
+  <div class="heart-wrap">
+    <!-- ============================================
+         YAHAN IMAGE CHANGE KARO — Red Heart Image
+         Apni heart image yahan daal do:
+         <img src="images/heart.png" class="heart-img" alt="heart">
+         ============================================ -->
+    <svg class="heart-img" viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="hg" cx="50%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#ff4d4d"/>
+          <stop offset="50%" stop-color="#cc0000"/>
+          <stop offset="100%" stop-color="#800000"/>
+        </radialGradient>
+        <radialGradient id="shine" cx="35%" cy="30%" r="40%">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.55)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </radialGradient>
+      </defs>
+      <path d="M100 160 C60 130 10 100 10 60 C10 30 30 10 55 10 C70 10 85 20 100 35 C115 20 130 10 145 10 C170 10 190 30 190 60 C190 100 140 130 100 160Z" fill="url(#hg)"/>
+      <path d="M100 160 C60 130 10 100 10 60 C10 30 30 10 55 10 C70 10 85 20 100 35 C115 20 130 10 145 10 C170 10 190 30 190 60 C190 100 140 130 100 160Z" fill="url(#shine)"/>
+      <!-- White stripes like in design -->
+      <rect x="22" y="68" width="156" height="14" rx="7" fill="rgba(255,255,255,0.35)"/>
+      <rect x="18" y="88" width="164" height="14" rx="7" fill="rgba(255,255,255,0.35)"/>
+      <rect x="28" y="108" width="144" height="14" rx="7" fill="rgba(255,255,255,0.25)"/>
+    </svg>
+  </div>
+
+  <!-- Form -->
+  <div class="form-group">
+    <input type="text" id="name" placeholder="Name" autocomplete="off"/>
+    <div class="error-msg" id="nameErr">Please enter your full name</div>
+  </div>
+
+  <div class="form-group">
+    <input type="tel" id="phone" placeholder="Phone No." maxlength="10" autocomplete="off"/>
+    <div class="error-msg" id="phoneErr">Enter valid 10-digit Indian mobile number</div>
+  </div>
+
+  <div class="form-group">
+    <input type="number" id="age" placeholder="Age" min="18" max="60" autocomplete="off"/>
+    <div class="error-msg" id="ageErr">Age must be between 18 and 60</div>
+  </div>
+
+  <div class="form-group">
+    <input type="email" id="email" placeholder="Email" autocomplete="off"/>
+    <div class="error-msg" id="emailErr">Enter a valid email address</div>
+  </div>
+
+  <div class="form-group">
+    <select id="gender" onchange="this.classList.add('filled')">
+      <option value="" disabled selected>Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+    <div class="error-msg" id="genderErr">Please select your gender</div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-reset" onclick="resetForm()">Reset</button>
+    <button class="btn btn-submit" onclick="submitForm()">Submit</button>
+  </div>
+
+  <div class="login-link">
+    Have already sign up? <a onclick="window.location.href='login.html'">LOGIN</a>
+  </div>
+</div>
+
+<!-- Success Popup -->
+<div class="popup-overlay" id="successPopup">
+  <div class="popup-box">
+    <div class="popup-icon">💕</div>
+    <div class="popup-title">Request Sent!</div>
+    <div class="popup-msg">Your sign up request has been sent.<br>Please wait for admin approval.<br>You will be able to login once approved.</div>
+    <button class="popup-btn" onclick="closePopup()">OK, Got it!</button>
+  </div>
+</div>
+
+<!-- Error Popup -->
+<div class="popup-overlay" id="errorPopup">
+  <div class="popup-box">
+    <div class="popup-icon">⚠️</div>
+    <div class="popup-title">Already Exists!</div>
+    <div class="popup-msg" id="errorPopupMsg">This email or phone number is already registered.</div>
+    <button class="popup-btn" onclick="document.getElementById('errorPopup').classList.remove('show')">Try Again</button>
+  </div>
+</div>
+
+<script>
+  // Generate floating hearts
+  const heartsBg = document.getElementById('heartsBg');
+  const heartChars = ['❤️','💕','💗','💓','💖','💝'];
+  for (let i = 0; i < 18; i++) {
+    const h = document.createElement('span');
+    h.className = 'heart-float';
+    h.textContent = heartChars[Math.floor(Math.random() * heartChars.length)];
+    h.style.left = Math.random() * 100 + '%';
+    h.style.animationDelay = Math.random() * 6 + 's';
+    h.style.animationDuration = (4 + Math.random() * 5) + 's';
+    h.style.fontSize = (0.8 + Math.random() * 1.2) + 'rem';
+    heartsBg.appendChild(h);
+  }
+
+  function validateName(val) { return val.trim().length >= 2; }
+
+  function validatePhone(val) {
+    return /^[6-9]\d{9}$/.test(val.trim());
+  }
+
+  function validateAge(val) {
+    const n = parseInt(val);
+    return !isNaN(n) && n >= 18 && n <= 60;
+  }
+
+  function validateEmail(val) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val.trim());
+  }
+
+  function showError(inputId, errId, show) {
+    const inp = document.getElementById(inputId);
+    const err = document.getElementById(errId);
+    if (show) {
+      inp.classList.add('error');
+      err.classList.add('show');
+    } else {
+      inp.classList.remove('error');
+      err.classList.remove('show');
+    }
+  }
+
+  // Real-time validation
+  document.getElementById('name').addEventListener('input', function() {
+    showError('name','nameErr', !validateName(this.value));
+  });
+  document.getElementById('phone').addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g,'');
+    showError('phone','phoneErr', this.value.length > 0 && !validatePhone(this.value));
+  });
+  document.getElementById('age').addEventListener('input', function() {
+    showError('age','ageErr', this.value.length > 0 && !validateAge(this.value));
+  });
+  document.getElementById('email').addEventListener('input', function() {
+    showError('email','emailErr', this.value.length > 0 && !validateEmail(this.value));
+  });
+
+  function submitForm() {
+    const name   = document.getElementById('name').value;
+    const phone  = document.getElementById('phone').value;
+    const age    = document.getElementById('age').value;
+    const email  = document.getElementById('email').value;
+    const gender = document.getElementById('gender').value;
+
+    let valid = true;
+
+    if (!validateName(name))  { showError('name','nameErr',true); valid=false; }
+    else showError('name','nameErr',false);
+
+    if (!validatePhone(phone)) { showError('phone','phoneErr',true); valid=false; }
+    else showError('phone','phoneErr',false);
+
+    if (!validateAge(age))    { showError('age','ageErr',true); valid=false; }
+    else showError('age','ageErr',false);
+
+    if (!validateEmail(email)) { showError('email','emailErr',true); valid=false; }
+    else showError('email','emailErr',false);
+
+    if (!gender) { showError('gender','genderErr',true); valid=false; }
+    else showError('gender','genderErr',false);
+
+    if (!valid) return;
+
+    // Check duplicate
+    const users = JSON.parse(localStorage.getItem('mylove_users') || '[]');
+    const dup = users.find(u => u.phone === phone.trim() || u.email === email.trim().toLowerCase());
+    if (dup) {
+      document.getElementById('errorPopupMsg').textContent =
+        'This email or phone number is already registered. Please login instead.';
+      document.getElementById('errorPopup').classList.add('show');
+      return;
+    }
+
+    // Save user with pending status
+    const newUser = {
+      id: Date.now(),
+      name: name.trim(),
+      phone: phone.trim(),
+      age: parseInt(age),
+      email: email.trim().toLowerCase(),
+      gender: gender,
+      status: 'pending', // pending | approved | rejected
+      createdAt: new Date().toISOString()
+    };
+    users.push(newUser);
+    localStorage.setItem('mylove_users', JSON.stringify(users));
+
+    document.getElementById('successPopup').classList.add('show');
+  }
+
+  function resetForm() {
+    ['name','phone','age','email'].forEach(id => {
+      document.getElementById(id).value = '';
+      document.getElementById(id).classList.remove('error');
+    });
+    document.getElementById('gender').value = '';
+    document.getElementById('gender').classList.remove('filled');
+    ['nameErr','phoneErr','ageErr','emailErr','genderErr'].forEach(id => {
+      document.getElementById(id).classList.remove('show');
+    });
+  }
+
+  function closePopup() {
+    document.getElementById('successPopup').classList.remove('show');
+    resetForm();
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Love — Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --coral: #e8523a;
+      --coral-dark: #c93d25;
+      --white: #ffffff;
+      --purple: #5b4fcf;
+      --text-dark: #1a0a0e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: var(--coral);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+    .hearts-bg { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; overflow:hidden; }
+    .heart-float { position:absolute; bottom:-50px; opacity:0; animation: floatUp 6s ease-in infinite; }
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(0deg); opacity:0.6; }
+      100% { transform: translateY(-110vh) rotate(20deg); opacity:0; }
+    }
+
+    .card {
+      position: relative;
+      z-index: 2;
+      width: 320px;
+      background: var(--coral);
+      border-radius: 28px;
+      padding: 30px 24px 26px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      border: 1.5px solid rgba(255,255,255,0.18);
+      animation: slideUp 0.7s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes slideUp {
+      from { opacity:0; transform:translateY(60px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--white);
+      text-align: center;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      animation: fadeIn 0.9s 0.2s both;
+    }
+    @keyframes fadeIn {
+      from { opacity:0; transform:translateY(12px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .heart-wrap {
+      position: relative;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      animation: fadeIn 0.9s 0.3s both;
+    }
+    .heart-img {
+      width: 200px;
+      height: 150px;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 24px rgba(180,0,0,0.5));
+      animation: heartbeat 2s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+    /* ============================================
+       YAHAN IMAGE CHANGE KARO — Heart image
+       Apni red heart image ka path daal do:
+       src="images/heart.png"
+       ============================================ */
+    @keyframes heartbeat {
+      0%,100% { transform: scale(1); }
+      14%     { transform: scale(1.08); }
+      28%     { transform: scale(1); }
+      42%     { transform: scale(1.05); }
+      56%     { transform: scale(1); }
+    }
+
+    /* Fields are overlaid on heart like in design */
+    .fields-on-heart {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 16px;
+      border-radius: 50px;
+      border: none;
+      background: rgba(255,255,255,0.92);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.83rem;
+      color: #333;
+      outline: none;
+      transition: box-shadow 0.3s, background 0.3s;
+    }
+    input::placeholder { color: #888; }
+    input:focus { background: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,0.5); }
+    input.error { box-shadow: 0 0 0 2px #ff6b6b; }
+
+    .error-msg {
+      color: #ffe0e0;
+      font-size: 0.72rem;
+      margin-top: 2px;
+      padding-left: 12px;
+      display: none;
+      font-weight: 500;
+    }
+    .error-msg.show { display: block; }
+
+    .form-group { margin-bottom: 10px; animation: fadeIn 0.7s both; }
+    .form-group:nth-child(1) { animation-delay: 0.4s; }
+    .form-group:nth-child(2) { animation-delay: 0.5s; }
+    .form-group:nth-child(3) { animation-delay: 0.6s; }
+
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      animation: fadeIn 0.7s 0.8s both;
+    }
+    .btn {
+      flex: 1;
+      padding: 11px;
+      border-radius: 50px;
+      border: none;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn:active { transform: scale(0.96); }
+    .btn-reset {
+      background: var(--purple);
+      color: var(--white);
+      box-shadow: 0 4px 15px rgba(91,79,207,0.4);
+    }
+    .btn-reset:hover { box-shadow: 0 6px 20px rgba(91,79,207,0.55); transform: translateY(-1px); }
+    .btn-submit {
+      background: var(--purple);
+      color: var(--white);
+      box-shadow: 0 4px 15px rgba(91,79,207,0.4);
+    }
+    .btn-submit:hover { box-shadow: 0 6px 20px rgba(91,79,207,0.55); transform: translateY(-1px); }
+
+    .signup-link {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.75);
+      animation: fadeIn 0.7s 1s both;
+    }
+    .signup-link a { color: var(--white); font-weight: 600; text-decoration: underline; cursor: pointer; }
+
+    /* Popups */
+    .popup-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:100; align-items:center; justify-content:center; }
+    .popup-overlay.show { display:flex; }
+    .popup-box { background:#fff; border-radius:20px; padding:32px 28px; text-align:center; max-width:300px; width:90%; animation: popIn 0.4s cubic-bezier(.22,1,.36,1); }
+    @keyframes popIn { from { transform:scale(0.7); opacity:0; } to { transform:scale(1); opacity:1; } }
+    .popup-icon { font-size:3rem; margin-bottom:12px; }
+    .popup-title { font-family:'Playfair Display',serif; font-size:1.4rem; margin-bottom:8px; }
+    .popup-title.red { color: #d63031; }
+    .popup-title.green { color: var(--coral); }
+    .popup-msg { font-size:0.85rem; color:#555; line-height:1.6; margin-bottom:20px; }
+    .popup-btn { background:var(--coral); color:white; border:none; border-radius:50px; padding:10px 28px; font-family:'Poppins',sans-serif; font-size:0.9rem; font-weight:600; cursor:pointer; transition:background 0.2s; }
+    .popup-btn:hover { background:var(--coral-dark, #c93d25); }
+    .popup-btn.red { background: #d63031; }
+  </style>
+</head>
+<body>
+
+<div class="hearts-bg" id="heartsBg"></div>
+
+<div class="card">
+  <h1>Login for LOVE</h1>
+
+  <div class="heart-wrap">
+    <!-- ============================================
+         YAHAN IMAGE CHANGE KARO — Red Heart Image
+         Apni heart image yahan daal do:
+         <img src="images/heart.png" class="heart-img" alt="heart">
+         ============================================ -->
+    <svg class="heart-img" viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="hg" cx="50%" cy="35%" r="65%">
+          <stop offset="0%" stop-color="#ff4d4d"/>
+          <stop offset="50%" stop-color="#cc0000"/>
+          <stop offset="100%" stop-color="#800000"/>
+        </radialGradient>
+        <radialGradient id="shine" cx="35%" cy="30%" r="40%">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.55)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </radialGradient>
+      </defs>
+      <path d="M100 160 C60 130 10 100 10 60 C10 30 30 10 55 10 C70 10 85 20 100 35 C115 20 130 10 145 10 C170 10 190 30 190 60 C190 100 140 130 100 160Z" fill="url(#hg)"/>
+      <path d="M100 160 C60 130 10 100 10 60 C10 30 30 10 55 10 C70 10 85 20 100 35 C115 20 130 10 145 10 C170 10 190 30 190 60 C190 100 140 130 100 160Z" fill="url(#shine)"/>
+      <rect x="22" y="68" width="156" height="14" rx="7" fill="rgba(255,255,255,0.35)"/>
+      <rect x="18" y="88" width="164" height="14" rx="7" fill="rgba(255,255,255,0.35)"/>
+      <rect x="28" y="108" width="144" height="14" rx="7" fill="rgba(255,255,255,0.25)"/>
+    </svg>
+
+    <!-- Fields overlaid on heart -->
+    <div class="fields-on-heart">
+      <input type="text" id="name" placeholder="Name" autocomplete="off"/>
+      <input type="tel" id="phone" placeholder="Phone No." maxlength="10" autocomplete="off"/>
+      <input type="email" id="email" placeholder="Email" autocomplete="off"/>
+    </div>
+  </div>
+
+  <div class="error-msg" id="nameErr" style="margin-top:-6px; margin-bottom:4px;">Please enter your name</div>
+  <div class="error-msg" id="phoneErr" style="margin-bottom:4px;">Enter valid 10-digit phone number</div>
+  <div class="error-msg" id="emailErr" style="margin-bottom:4px;">Enter a valid email address</div>
+
+  <div class="btn-row">
+    <button class="btn btn-reset" onclick="resetForm()">Reset</button>
+    <button class="btn btn-submit" onclick="loginUser()">Submit</button>
+  </div>
+
+  <div class="signup-link">
+    Don't have account? <a onclick="window.location.href='index.html'">SIGN UP</a>
+  </div>
+</div>
+
+<!-- Rejected Popup -->
+<div class="popup-overlay" id="rejectedPopup">
+  <div class="popup-box">
+    <div class="popup-icon">💔</div>
+    <div class="popup-title red">You Are Rejected</div>
+    <div class="popup-msg">
+      Sorry! Your request has been reviewed and rejected by the admin.<br><br>
+      Your love story could not begin here. 😢<br>
+      Please contact admin for more information.
+    </div>
+    <button class="popup-btn red" onclick="document.getElementById('rejectedPopup').classList.remove('show')">OK</button>
+  </div>
+</div>
+
+<!-- Pending Popup -->
+<div class="popup-overlay" id="pendingPopup">
+  <div class="popup-box">
+    <div class="popup-icon">⏳</div>
+    <div class="popup-title" style="color:#e67e22;">Approval Pending</div>
+    <div class="popup-msg">
+      Your account is awaiting admin approval.<br><br>
+      Please check back later. We will review your request soon! 💕
+    </div>
+    <button class="popup-btn" onclick="document.getElementById('pendingPopup').classList.remove('show')">OK</button>
+  </div>
+</div>
+
+<!-- Not Found Popup -->
+<div class="popup-overlay" id="notFoundPopup">
+  <div class="popup-box">
+    <div class="popup-icon">❓</div>
+    <div class="popup-title red">Not Found</div>
+    <div class="popup-msg">
+      No account found with these details.<br>Please check your Name, Phone & Email or Sign Up first.
+    </div>
+    <button class="popup-btn red" onclick="document.getElementById('notFoundPopup').classList.remove('show')">Try Again</button>
+  </div>
+</div>
+
+<script>
+  // Floating hearts
+  const heartsBg = document.getElementById('heartsBg');
+  const heartChars = ['❤️','💕','💗','💓','💖','💝'];
+  for (let i = 0; i < 18; i++) {
+    const h = document.createElement('span');
+    h.className = 'heart-float';
+    h.textContent = heartChars[Math.floor(Math.random() * heartChars.length)];
+    h.style.left = Math.random() * 100 + '%';
+    h.style.animationDelay = Math.random() * 6 + 's';
+    h.style.animationDuration = (4 + Math.random() * 5) + 's';
+    h.style.fontSize = (0.8 + Math.random() * 1.2) + 'rem';
+    heartsBg.appendChild(h);
+  }
+
+  function validatePhone(val) { return /^[6-9]\d{9}$/.test(val.trim()); }
+  function validateEmail(val) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val.trim()); }
+
+  function showErr(id, show) {
+    document.getElementById(id).classList[show ? 'add' : 'remove']('show');
+  }
+
+  document.getElementById('phone').addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g,'');
+  });
+
+  function loginUser() {
+    const name  = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim().toLowerCase();
+
+    let valid = true;
+    if (!name)              { showErr('nameErr', true);  valid = false; } else showErr('nameErr', false);
+    if (!validatePhone(phone)) { showErr('phoneErr', true); valid = false; } else showErr('phoneErr', false);
+    if (!validateEmail(email)) { showErr('emailErr', true); valid = false; } else showErr('emailErr', false);
+    if (!valid) return;
+
+    const users = JSON.parse(localStorage.getItem('mylove_users') || '[]');
+    const user = users.find(u =>
+      u.name.toLowerCase() === name.toLowerCase() &&
+      u.phone === phone &&
+      u.email === email
+    );
+
+    if (!user) {
+      document.getElementById('notFoundPopup').classList.add('show');
+      return;
+    }
+
+    if (user.status === 'rejected') {
+      document.getElementById('rejectedPopup').classList.add('show');
+      return;
+    }
+
+    if (user.status === 'pending') {
+      document.getElementById('pendingPopup').classList.add('show');
+      return;
+    }
+
+    if (user.status === 'approved') {
+      // Save session
+      localStorage.setItem('mylove_session', JSON.stringify({ id: user.id, name: user.name }));
+      window.location.href = 'love.html';
+    }
+  }
+
+  function resetForm() {
+    ['name','phone','email'].forEach(id => {
+      document.getElementById(id).value = '';
+      document.getElementById(id).classList.remove('error');
+    });
+    ['nameErr','phoneErr','emailErr'].forEach(id => showErr(id, false));
+  }
+</script>
+</body>
+</html>

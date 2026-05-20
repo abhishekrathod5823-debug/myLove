@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel — My Love</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --coral: #e8523a;
+      --coral-dark: #c93d25;
+      --white: #ffffff;
+      --purple: #5b4fcf;
+      --red-btn: #d63031;
+      --green-btn: #27ae60;
+      --bg: #1a0a0e;
+      --card-bg: #2a1218;
+      --table-bg: #e8e0dc;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      font-family: 'Poppins', sans-serif;
+      color: var(--white);
+    }
+
+    /* ===== LOGIN PAGE ===== */
+    #loginPage {
+      min-height: 100vh;
+      background: var(--coral);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hearts-bg { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; overflow:hidden; }
+    .heart-float { position:absolute; bottom:-50px; opacity:0; animation: floatUp 6s ease-in infinite; }
+    @keyframes floatUp {
+      0%   { transform:translateY(0) rotate(0deg); opacity:0.6; }
+      100% { transform:translateY(-110vh) rotate(20deg); opacity:0; }
+    }
+
+    .login-card {
+      position: relative;
+      z-index: 2;
+      width: 320px;
+      background: var(--coral);
+      border-radius: 28px;
+      padding: 36px 28px 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      animation: slideUp 0.7s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes slideUp {
+      from { opacity:0; transform:translateY(60px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .login-card h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem;
+      color: var(--white);
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    .admin-badge {
+      text-align: center;
+      background: rgba(0,0,0,0.2);
+      border-radius: 50px;
+      padding: 4px 16px;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+    }
+    .login-card input {
+      width: 100%;
+      padding: 12px 18px;
+      border-radius: 50px;
+      border: none;
+      background: rgba(255,255,255,0.92);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.88rem;
+      color: #333;
+      outline: none;
+      margin-bottom: 12px;
+      transition: box-shadow 0.3s;
+    }
+    .login-card input:focus { background:#fff; box-shadow: 0 0 0 3px rgba(255,255,255,0.5); }
+    .login-card input.error { box-shadow: 0 0 0 2px #ff6b6b; }
+    .login-btn {
+      width: 100%;
+      padding: 13px;
+      border-radius: 50px;
+      border: none;
+      background: var(--purple);
+      color: var(--white);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 4px;
+      box-shadow: 0 4px 15px rgba(91,79,207,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(91,79,207,0.5); }
+    .login-btn:active { transform: scale(0.97); }
+    .login-err {
+      color: #ffe0e0;
+      font-size: 0.78rem;
+      text-align: center;
+      margin-top: 10px;
+      display: none;
+      font-weight: 500;
+    }
+    .login-err.show { display: block; }
+
+    /* ===== ADMIN DASHBOARD ===== */
+    #dashboardPage { display: none; min-height: 100vh; }
+
+    .dash-header {
+      background: var(--coral);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .dash-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--white);
+    }
+    .dash-header span { font-size: 0.8rem; color: rgba(255,255,255,0.7); }
+    .logout-btn {
+      background: rgba(0,0,0,0.25);
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 50px;
+      padding: 7px 18px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .logout-btn:hover { background: rgba(0,0,0,0.4); }
+
+    .dash-body {
+      padding: 24px 16px;
+      background: var(--coral);
+      min-height: calc(100vh - 65px);
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .stat-card {
+      flex: 1;
+      min-width: 90px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 16px;
+      padding: 14px 16px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .stat-card .num { font-size: 1.8rem; font-weight: 700; color: var(--white); }
+    .stat-card .label { font-size: 0.7rem; color: rgba(255,255,255,0.7); margin-top: 2px; }
+
+    .table-wrap {
+      background: var(--table-bg);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    }
+
+    .table-header {
+      display: grid;
+      grid-template-columns: 1.5fr 1.3fr 0.6fr 1.8fr 0.9fr 1.5fr;
+      background: #2a2a2a;
+      border-radius: 16px;
+      margin: 12px;
+      padding: 12px 16px;
+      gap: 8px;
+    }
+    .table-header span {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--white);
+      text-align: center;
+    }
+
+    .table-body { padding: 0 12px 12px; }
+
+    .user-row {
+      display: grid;
+      grid-template-columns: 1.5fr 1.3fr 0.6fr 1.8fr 0.9fr 1.5fr;
+      background: var(--white);
+      border-radius: 12px;
+      padding: 12px 16px;
+      gap: 8px;
+      margin-bottom: 8px;
+      align-items: center;
+      animation: fadeIn 0.4s both;
+    }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+    .user-row span {
+      font-size: 0.75rem;
+      color: #333;
+      text-align: center;
+      word-break: break-all;
+    }
+    .user-row span:first-child { text-align: left; font-weight: 500; color: #111; }
+
+    .action-btns { display: flex; gap: 6px; justify-content: center; }
+    .act-btn {
+      padding: 5px 12px;
+      border-radius: 50px;
+      border: none;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s, opacity 0.2s;
+    }
+    .act-btn:active { transform: scale(0.93); }
+    .approve-btn { background: var(--purple); color: #fff; }
+    .approve-btn:hover { opacity: 0.85; }
+    .reject-btn { background: var(--red-btn); color: #fff; }
+    .reject-btn:hover { opacity: 0.85; }
+    .approved-tag { color: #27ae60; font-weight: 600; font-size: 0.75rem; }
+    .rejected-tag { color: var(--red-btn); font-weight: 600; font-size: 0.75rem; }
+    .pending-tag  { color: #e67e22; font-weight: 600; font-size: 0.75rem; }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #888;
+      font-size: 0.9rem;
+    }
+    .empty-state .big { font-size: 3rem; margin-bottom: 12px; }
+
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 6px 16px;
+      border-radius: 50px;
+      border: 2px solid rgba(255,255,255,0.4);
+      background: transparent;
+      color: var(--white);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: rgba(255,255,255,0.2);
+      border-color: var(--white);
+    }
+
+    /* Confirm popup */
+    .popup-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:200; align-items:center; justify-content:center; }
+    .popup-overlay.show { display:flex; }
+    .popup-box { background:#fff; border-radius:20px; padding:28px 24px; text-align:center; max-width:280px; width:90%; animation: popIn 0.3s cubic-bezier(.22,1,.36,1); }
+    @keyframes popIn { from { transform:scale(0.7); opacity:0; } to { transform:scale(1); opacity:1; } }
+    .popup-icon { font-size:2.5rem; margin-bottom:10px; }
+    .popup-title { font-family:'Playfair Display',serif; font-size:1.2rem; margin-bottom:8px; color:#333; }
+    .popup-msg { font-size:0.82rem; color:#666; line-height:1.5; margin-bottom:18px; }
+    .popup-btns { display:flex; gap:10px; justify-content:center; }
+    .popup-btn { border:none; border-radius:50px; padding:9px 22px; font-family:'Poppins',sans-serif; font-size:0.85rem; font-weight:600; cursor:pointer; }
+    .popup-btn.confirm-approve { background:var(--purple); color:#fff; }
+    .popup-btn.confirm-reject  { background:var(--red-btn); color:#fff; }
+    .popup-btn.cancel-btn      { background:#eee; color:#333; }
+  </style>
+</head>
+<body>
+
+<div class="hearts-bg" id="heartsBg"></div>
+
+<!-- ===== LOGIN PAGE ===== -->
+<div id="loginPage">
+  <div class="login-card">
+    <h1>Admin Login</h1>
+    <div class="admin-badge">🔐 RESTRICTED ACCESS</div>
+    <input type="text" id="adminUser" placeholder="Username" autocomplete="off"/>
+    <input type="password" id="adminPass" placeholder="Password" autocomplete="off"
+           onkeydown="if(event.key==='Enter') adminLogin()"/>
+    <button class="login-btn" onclick="adminLogin()">Login</button>
+    <div class="login-err" id="loginErr">❌ Invalid username or password</div>
+  </div>
+</div>
+
+<!-- ===== DASHBOARD PAGE ===== -->
+<div id="dashboardPage">
+  <div class="dash-header">
+    <div>
+      <h2>💕 Admin Panel</h2>
+      <span>My Love — User Management</span>
+    </div>
+    <button class="logout-btn" onclick="adminLogout()">Logout</button>
+  </div>
+
+  <div class="dash-body">
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="num" id="statTotal">0</div>
+        <div class="label">Total Users</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="statPending">0</div>
+        <div class="label">Pending</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="statApproved">0</div>
+        <div class="label">Approved</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="statRejected">0</div>
+        <div class="label">Rejected</div>
+      </div>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="filterUsers('all', this)">All</button>
+      <button class="filter-btn" onclick="filterUsers('pending', this)">Pending</button>
+      <button class="filter-btn" onclick="filterUsers('approved', this)">Approved</button>
+      <button class="filter-btn" onclick="filterUsers('rejected', this)">Rejected</button>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <div class="table-header">
+        <span>Name</span>
+        <span>Phone No</span>
+        <span>Age</span>
+        <span>Email</span>
+        <span>Gender</span>
+        <span>Status</span>
+      </div>
+      <div class="table-body" id="tableBody"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Popup -->
+<div class="popup-overlay" id="confirmPopup">
+  <div class="popup-box">
+    <div class="popup-icon" id="confirmIcon">✅</div>
+    <div class="popup-title" id="confirmTitle">Approve User?</div>
+    <div class="popup-msg" id="confirmMsg">Are you sure you want to approve this user?</div>
+    <div class="popup-btns">
+      <button class="popup-btn cancel-btn" onclick="closeConfirm()">Cancel</button>
+      <button class="popup-btn" id="confirmBtn" onclick="doAction()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== ADMIN CREDENTIALS =====
+  // Username aur password yahan change kar sakte ho
+  const ADMIN_USER = 'Abhishek';
+  const ADMIN_PASS = 'Abhishek2012';
+
+  let currentFilter = 'all';
+  let pendingAction = null; // { userId, action }
+
+  // Floating hearts
+  const heartsBg = document.getElementById('heartsBg');
+  const heartChars = ['❤️','💕','💗','💓','💖'];
+  for (let i = 0; i < 14; i++) {
+    const h = document.createElement('span');
+    h.className = 'heart-float';
+    h.textContent = heartChars[Math.floor(Math.random() * heartChars.length)];
+    h.style.left = Math.random() * 100 + '%';
+    h.style.animationDelay = Math.random() * 6 + 's';
+    h.style.animationDuration = (4 + Math.random() * 5) + 's';
+    h.style.fontSize = (0.8 + Math.random() * 1) + 'rem';
+    heartsBg.appendChild(h);
+  }
+
+  // Check if admin already logged in
+  window.onload = function() {
+    if (localStorage.getItem('admin_session') === 'true') {
+      showDashboard();
+    }
+  };
+
+  function adminLogin() {
+    const u = document.getElementById('adminUser').value.trim();
+    const p = document.getElementById('adminPass').value.trim();
+    const err = document.getElementById('loginErr');
+
+    if (u === ADMIN_USER && p === ADMIN_PASS) {
+      localStorage.setItem('admin_session', 'true');
+      err.classList.remove('show');
+      showDashboard();
+    } else {
+      err.classList.add('show');
+      document.getElementById('adminUser').classList.add('error');
+      document.getElementById('adminPass').classList.add('error');
+      setTimeout(() => {
+        document.getElementById('adminUser').classList.remove('error');
+        document.getElementById('adminPass').classList.remove('error');
+      }, 1500);
+    }
+  }
+
+  function adminLogout() {
+    localStorage.removeItem('admin_session');
+    document.getElementById('dashboardPage').style.display = 'none';
+    document.getElementById('loginPage').style.display = 'flex';
+    document.getElementById('adminUser').value = '';
+    document.getElementById('adminPass').value = '';
+  }
+
+  function showDashboard() {
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('dashboardPage').style.display = 'block';
+    renderTable();
+  }
+
+  function getUsers() {
+    return JSON.parse(localStorage.getItem('mylove_users') || '[]');
+  }
+  function saveUsers(users) {
+    localStorage.setItem('mylove_users', JSON.stringify(users));
+  }
+
+  function updateStats(users) {
+    document.getElementById('statTotal').textContent    = users.length;
+    document.getElementById('statPending').textContent  = users.filter(u => u.status === 'pending').length;
+    document.getElementById('statApproved').textContent = users.filter(u => u.status === 'approved').length;
+    document.getElementById('statRejected').textContent = users.filter(u => u.status === 'rejected').length;
+  }
+
+  function renderTable() {
+    const users = getUsers();
+    updateStats(users);
+
+    const filtered = currentFilter === 'all' ? users : users.filter(u => u.status === currentFilter);
+    const tbody = document.getElementById('tableBody');
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = `<div class="empty-state"><div class="big">💔</div>No users found</div>`;
+      return;
+    }
+
+    tbody.innerHTML = filtered.map((u, i) => `
+      <div class="user-row" style="animation-delay:${i * 0.05}s">
+        <span>${u.name}</span>
+        <span>${u.phone}</span>
+        <span>${u.age}</span>
+        <span>${u.email}</span>
+        <span>${u.gender}</span>
+        <span>
+          ${u.status === 'pending' ? `
+            <div class="action-btns">
+              <button class="act-btn approve-btn" onclick="confirmAction(${u.id}, 'approve')">Approve</button>
+              <button class="act-btn reject-btn"  onclick="confirmAction(${u.id}, 'reject')">Reject</button>
+            </div>
+          ` : u.status === 'approved' ? `
+            <span class="approved-tag">✅ Approved</span>
+          ` : `
+            <span class="rejected-tag">❌ Rejected</span>
+          `}
+        </span>
+      </div>
+    `).join('');
+  }
+
+  function filterUsers(filter, btn) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderTable();
+  }
+
+  function confirmAction(userId, action) {
+    pendingAction = { userId, action };
+    const isApprove = action === 'approve';
+    document.getElementById('confirmIcon').textContent  = isApprove ? '💕' : '💔';
+    document.getElementById('confirmTitle').textContent = isApprove ? 'Approve User?' : 'Reject User?';
+    document.getElementById('confirmMsg').textContent   = isApprove
+      ? 'Are you sure you want to approve this user? They will be able to login.'
+      : 'Are you sure you want to reject this user? They will not be able to login.';
+    const btn = document.getElementById('confirmBtn');
+    btn.className = 'popup-btn ' + (isApprove ? 'confirm-approve' : 'confirm-reject');
+    btn.textContent = isApprove ? 'Yes, Approve' : 'Yes, Reject';
+    document.getElementById('confirmPopup').classList.add('show');
+  }
+
+  function doAction() {
+    if (!pendingAction) return;
+    const users = getUsers();
+    const idx = users.findIndex(u => u.id === pendingAction.userId);
+    if (idx !== -1) {
+      users[idx].status = pendingAction.action === 'approve' ? 'approved' : 'rejected';
+      saveUsers(users);
+    }
+    closeConfirm();
+    renderTable();
+  }
+
+  function closeConfirm() {
+    document.getElementById('confirmPopup').classList.remove('show');
+    pendingAction = null;
+  }
+
+  // Auto refresh every 30 seconds
+  setInterval(() => {
+    if (localStorage.getItem('admin_session') === 'true') renderTable();
+  }, 30000);
+</script>
+</body>
+</html>
