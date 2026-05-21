@@ -4,660 +4,387 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Love 💕</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
   <style>
-    :root {
-      --coral: #e8523a;
-      --coral-dark: #c93d25;
-      --white: #ffffff;
-      --cream: #fff8f3;
-    }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     body {
-      background: var(--coral);
-      font-family: 'Poppins', sans-serif;
+      background: rgb(237,101,73);
+      font-family: 'Inter', sans-serif;
       overflow-x: hidden;
-      color: var(--white);
-    }
-
-    /* ========== SECTION 1 — HERO ========== */
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      overflow: hidden;
-      padding: 0;
-    }
-
-    /* Background image — blur */
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background: var(--coral);
-      /* ============================================
-         YAHAN IMAGE CHANGE KARO — Hero Background (blur)
-         Apni couple hands blur image daal do:
-         background: url('images/bg1.jpg') center/cover no-repeat;
-         filter: blur(3px) brightness(0.6);
-         ============================================ */
-      z-index: 0;
-    }
-    .hero-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(232, 82, 58, 0.72);
-    }
-
-    .hero-top {
-      position: relative;
-      z-index: 2;
-      padding: 36px 24px 0;
-    }
-    .hero-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.6rem;
-      font-weight: 700;
-      color: var(--white);
-      line-height: 1.1;
-      animation: fadeDown 0.9s 0.2s both;
-    }
-    .hero-subtitle {
-      font-size: 0.85rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.9);
-      margin-top: 8px;
-      line-height: 1.5;
-      animation: fadeDown 0.9s 0.4s both;
-    }
-
-    @keyframes fadeDown {
-      from { opacity:0; transform:translateY(-20px); }
-      to   { opacity:1; transform:translateY(0); }
-    }
-    @keyframes fadeUp {
-      from { opacity:0; transform:translateY(30px); }
-      to   { opacity:1; transform:translateY(0); }
-    }
-
-    .hero-center {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      flex: 1;
-      padding: 20px 24px;
-    }
-
-    .i-love-you {
-      text-align: center;
-      animation: fadeUp 1s 0.5s both;
-    }
-    .i-text {
-      font-family: 'Playfair Display', serif;
-      font-size: 3.5rem;
-      font-weight: 700;
-      color: var(--white);
-      display: block;
-    }
-
-    .hero-heart {
-      width: 180px;
-      height: 150px;
-      object-fit: contain;
-      filter: drop-shadow(0 12px 30px rgba(0,0,0,0.5));
-      animation: heartbeat 2s ease-in-out infinite, fadeUp 1s 0.6s both;
-      display: block;
+      color: #fff;
+      max-width: 480px;
       margin: 0 auto;
     }
-    /* ============================================
-       YAHAN IMAGE CHANGE KARO — Big Red Heart (center)
-       <img src="images/heart.png" class="hero-heart">
-       ============================================ */
-    @keyframes heartbeat {
-      0%,100% { transform: scale(1); }
-      14%     { transform: scale(1.1); }
-      28%     { transform: scale(1); }
-      42%     { transform: scale(1.06); }
-    }
 
-    .you-text {
-      font-family: 'Playfair Display', serif;
-      font-size: 3.5rem;
-      font-weight: 700;
-      color: var(--white);
-      display: block;
-      margin-top: 4px;
-    }
-    .jana-text {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      font-style: italic;
-      color: rgba(255,255,255,0.92);
-      display: block;
-      margin-top: 2px;
-    }
-
-    /* Girl photo bottom right */
-    .hero-girl-photo {
-      position: absolute;
-      bottom: 0;
-      right: 16px;
-      z-index: 3;
-      width: 110px;
-      height: 110px;
-      border-radius: 50% 50% 0 0;
-      object-fit: cover;
-      /* ============================================
-         YAHAN IMAGE CHANGE KARO — Girl Photo (bottom right circle)
-         <img src="images/girl-face.jpg" class="hero-girl-photo">
-         ============================================ */
-      background: rgba(0,0,0,0.2);
-      overflow: hidden;
-      animation: fadeUp 1s 0.8s both;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-    }
-
-    /* ========== SCROLL REVEAL ========== */
-    .reveal {
-      opacity: 0;
-      transform: translateY(50px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .reveal-left {
-      opacity: 0;
-      transform: translateX(-50px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    .reveal-left.visible { opacity:1; transform:translateX(0); }
-    .reveal-right {
-      opacity: 0;
-      transform: translateX(50px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    .reveal-right.visible { opacity:1; transform:translateX(0); }
-
-    /* ========== SECTION 2 — POEM + PHOTOS ========== */
-    .section {
-      padding: 40px 20px;
-      position: relative;
-      overflow: hidden;
-    }
-    .section-bg {
-      position: absolute;
-      inset: 0;
-      /* ============================================
-         YAHAN IMAGE CHANGE KARO — Section Background (same blur bg)
-         background: url('images/bg2.jpg') center/cover no-repeat;
-         opacity: 0.3;
-         ============================================ */
-      background: rgba(0,0,0,0.08);
-      z-index: 0;
-    }
-
-    .two-col {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-    }
-    .two-col.reverse { flex-direction: row-reverse; }
-
-    .poem-block {
-      flex: 1.2;
-    }
-    .poem-line {
-      font-size: 0.82rem;
-      font-weight: 300;
-      line-height: 1.9;
-      color: rgba(255,255,255,0.95);
-      font-style: italic;
-    }
-    .poem-line strong {
-      font-weight: 500;
-      font-style: normal;
-      color: var(--white);
-    }
-
-    .photo-block {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .photo-frame {
-      width: 100%;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-      background: rgba(0,0,0,0.2);
-      aspect-ratio: 3/4;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      color: rgba(255,255,255,0.4);
-      position: relative;
-    }
-    .photo-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .photo-placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      color: rgba(255,255,255,0.5);
-      gap: 6px;
-      padding: 8px;
-      text-align: center;
-    }
-    .photo-placeholder .icon { font-size: 1.8rem; }
-
-    /* Instagram screenshot style */
-    .insta-frame {
-      border-radius: 12px;
-      overflow: hidden;
-      background: var(--white);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-      width: 100%;
-    }
-    .insta-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 10px;
-      border-bottom: 1px solid #eee;
-    }
-    .insta-avatar {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-    }
-    .insta-username { font-size: 0.72rem; font-weight: 600; color: #111; }
-    .insta-location { font-size: 0.62rem; color: #888; }
-    .insta-img {
-      width: 100%;
-      aspect-ratio: 1;
-      background: rgba(200,200,200,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #aaa;
-      font-size: 0.7rem;
-      text-align: center;
-      padding: 8px;
-      position: relative;
-      overflow: hidden;
-    }
-    .insta-img img { width:100%; height:100%; object-fit:cover; position:absolute; inset:0; }
-    .insta-footer { padding: 8px 10px; }
-    .insta-likes { font-size: 0.68rem; font-weight: 600; color: #111; }
-    .insta-caption { font-size: 0.65rem; color: #555; margin-top: 2px; line-height: 1.4; }
-
-    /* ========== SECTION DIVIDER ========== */
-    .divider {
-      height: 2px;
-      background: rgba(255,255,255,0.15);
-      margin: 0 20px;
-    }
-
-    /* ========== FLOATING HEARTS ========== */
-    .hearts-float-wrap { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:99; overflow:hidden; }
-    .heart-float { position:absolute; bottom:-50px; opacity:0; animation: floatUp 8s ease-in infinite; }
+    /* FLOATING HEARTS */
+    .hw { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:999; overflow:hidden; }
+    .hf { position:absolute; bottom:-60px; opacity:0; animation: floatUp 7s ease-in infinite; }
     @keyframes floatUp {
-      0%   { transform:translateY(0) rotate(0deg); opacity:0.4; }
-      100% { transform:translateY(-110vh) rotate(20deg); opacity:0; }
+      0%   { transform:translateY(0) rotate(-10deg); opacity:0.5; }
+      100% { transform:translateY(-110vh) rotate(15deg); opacity:0; }
     }
 
-    /* ========== LOGOUT BUTTON ========== */
-    .top-bar {
-      position: fixed;
-      top: 12px;
-      right: 12px;
-      z-index: 100;
-    }
+    /* TOP BAR */
+    .top-bar { position:fixed; top:12px; right:12px; z-index:1000; }
     .logout-btn {
-      background: rgba(0,0,0,0.3);
-      color: var(--white);
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 50px;
-      padding: 6px 14px;
-      font-size: 0.72rem;
-      cursor: pointer;
-      font-family: 'Poppins', sans-serif;
-      backdrop-filter: blur(4px);
+      background:rgba(0,0,0,0.3); color:#fff;
+      border:1px solid rgba(255,255,255,0.3);
+      border-radius:50px; padding:6px 14px;
+      font-size:0.72rem; cursor:pointer;
+      font-family:'Poppins',sans-serif;
     }
 
-    /* ========== HEART CURSOR ========== */
-    * { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M10 17 C6 14 1 10 1 6 C1 3 3 1 5.5 1 C7 1 8.5 2 10 3.5 C11.5 2 13 1 14.5 1 C17 1 19 3 19 6 C19 10 14 14 10 17Z' fill='%23e8523a'/%3E%3C/svg%3E") 10 10, pointer; }
+    /* SCROLL REVEAL */
+    .rv   { opacity:0; transform:translateY(40px);  transition:opacity 0.8s ease,transform 0.8s ease; }
+    .rvl  { opacity:0; transform:translateX(-40px); transition:opacity 0.8s ease,transform 0.8s ease; }
+    .rvr  { opacity:0; transform:translateX(40px);  transition:opacity 0.8s ease,transform 0.8s ease; }
+    .rv.on,.rvl.on,.rvr.on { opacity:1; transform:translate(0,0); }
+
+    /* ===== HERO ===== */
+    .hero {
+      position:relative; min-height:100vh;
+      overflow:hidden; display:flex; flex-direction:column;
+    }
+    .hero-bg {
+      position:absolute; inset:0;
+      background:url('v1_4.png') center/cover no-repeat;
+      opacity:0.4; z-index:0;
+      
+    }
+    .hero-in {
+      position:relative; z-index:2;
+      min-height:100vh; display:flex;
+      flex-direction:column; padding:30px 22px 40px;
+    }
+    .hero-title {
+      font-size: clamp(3rem,16vw,6rem);
+      font-weight:900; color:#fff; line-height:1;
+      animation: fd 0.9s 0.1s both;
+    }
+    .hero-sub {
+      font-size:clamp(0.82rem,3.5vw,1rem);
+      font-weight:700; color:rgba(255,255,255,0.92);
+      margin-top:8px; max-width:260px; line-height:1.5;
+      animation: fd 0.9s 0.25s both;
+    }
+    .hero-mid {
+      flex:1; display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      animation: fu 1s 0.4s both;
+    }
+    .i-txt { font-size:clamp(3.5rem,16vw,7rem); font-weight:900; color:#fff; text-align:center; line-height:1.1; }
+    .you-txt { font-size:clamp(3.5rem,16vw,7rem); font-weight:900; color:#fff; text-align:center; line-height:1; }
+    .jana-txt { font-size:clamp(1.6rem,7vw,3rem); font-style:italic; color:rgba(255,255,255,0.92); text-align:center; margin-top:4px; }
+
+    .hero-heart {
+      width:min(210px,54vw); height:auto;
+      filter:drop-shadow(0 10px 28px rgba(0,0,0,0.5));
+      animation:heartbeat 2s ease-in-out infinite;
+      display:block; margin:6px auto;
+    }
+    @keyframes heartbeat { 0%,100%{transform:scale(1)} 14%{transform:scale(1.1)} 28%{transform:scale(1)} 42%{transform:scale(1.06)} }
+    @keyframes fd { from{opacity:0;transform:translateY(-22px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fu { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ===== GENERIC SECTION ===== */
+    .sec {
+      position:relative; overflow:hidden;
+      padding:44px 18px;
+    }
+    .sec-bg {
+      position:absolute; inset:0;
+      background-size:cover; background-position:center;
+      background-repeat:no-repeat; opacity:0.4; z-index:0;
+    }
+    .sec-in { position:relative; z-index:1; }
+
+    /* POEM */
+    .poem {
+      font-size:clamp(0.8rem,3.4vw,1rem);
+      font-weight:700; line-height:2;
+      color:rgba(255,255,255,0.97);
+      text-align:center; white-space:pre-line;
+    }
+
+    /* ===== OVERLAP PHOTO BLOCK ===== */
+    /* Container */
+    .overlap-wrap {
+      position:relative;
+      width:100%;
+      /* height set by content */
+    }
+    /* Back photo — smaller, with background, slightly offset */
+    .photo-back {
+      position:relative;
+      width:100%;
+      border-radius:16px;
+      overflow:hidden;
+      display:block;
+      box-shadow:0 6px 20px rgba(0,0,0,0.3);
+      z-index:1;
+    }
+    .photo-back img {
+      width:100%; height:100%;
+      object-fit:cover; display:block;
+      border-radius:16px;
+    }
+    /* Front cutout — bigger, no background, overlapping */
+    .photo-front {
+      position:absolute;
+      
+      z-index:2;
+      filter:drop-shadow(0 8px 18px rgba(0,0,0,0.35));
+    }
+    .photo-front img {
+      width:100%; display:block;
+      mix-blend-mode:screen; /* removes black bg from PNG cutouts */
+    }
+
+    /* Section 2: white girl — back left, front right-ish */
+    .overlap-white .photo-back { margin-left:auto; margin-right:0; }
+    .overlap-white .photo-front { right:-110px; bottom:30px;width: 140%; }
+
+    /* Section 3: blue girl (eyes closed) — back right, front left-ish */
+    .overlap-blue .photo-back { margin-left:auto; }
+    .overlap-blue .photo-front { right:-8px; bottom:-20px; }
+
+    /* Section 4: purple girl — back left, front overlap right */
+    .overlap-purple .photo-back { margin-left:0; }
+    .overlap-purple .photo-front { right:-8px; bottom:-20px; }
+
+    /* TWO COL */
+    .row { display:flex; gap:14px; align-items:flex-start; }
+    .row.rev { flex-direction:row-reverse; }
+    .col-p { flex:1.1; }
+    .col-img { flex:1; }
+
+    /* SINGLE PHOTO (boy+girl combined) */
+    .photo-single {
+      width:100%; display:block;
+      mix-blend-mode:screen;
+      filter:drop-shadow(0 8px 20px rgba(0,0,0,0.3));
+    }
+
+    /* DIVIDER */
+    .divider { height:1px; background:rgba(255,255,255,0.15); margin:0 18px; }
+
+    @media(max-width:480px) {
+      .sec { padding:36px 14px; }
+    }
   </style>
 </head>
 <body>
 
-<!-- Auth check -->
 <script>
-  const session = localStorage.getItem('mylove_session');
-  if (!session) { window.location.href = 'login.html'; }
-  const userData = session ? JSON.parse(session) : null;
+  if (!localStorage.getItem('mylove_session')) window.location.href = 'login.html';
 </script>
 
-<!-- Top bar -->
+<!-- FLOATING HEARTS -->
+<div class="hw" id="hw"></div>
+
+<!-- LOGOUT -->
 <div class="top-bar">
-  <button class="logout-btn" onclick="logout()">Logout 💔</button>
+  <button class="logout-btn" onclick="localStorage.removeItem('mylove_session');window.location.href='login.html'">Logout 💔</button>
 </div>
 
-<!-- Floating hearts -->
-<div class="hearts-float-wrap" id="heartsBg"></div>
-
-<!-- ========== HERO SECTION ========== -->
+<!-- ========== HERO ========== -->
 <div class="hero">
   <div class="hero-bg"></div>
-
-  <div class="hero-top">
-    <div class="hero-title">My love</div>
-    <div class="hero-subtitle">Other all need Love<br>but I need only YOU</div>
-  </div>
-
-  <div class="hero-center">
-    <div class="i-love-you">
-      <span class="i-text">I</span>
-
-      <!-- ============================================
-           YAHAN IMAGE CHANGE KARO — Big Red Heart
-           <img src="images/heart.png" class="hero-heart" alt="heart">
-           ============================================ -->
-      <svg class="hero-heart" viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg">
+  <div class="hero-in">
+    <div>
+      <div class="hero-title">My love</div>
+      <div class="hero-sub">Other all need Love<br>but I need only YOU</div>
+    </div>
+    <div class="hero-mid">
+      <div class="i-txt">I</div>
+      <!-- RED HEART SVG -->
+      <svg class="hero-heart" viewBox="0 0 200 175" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <radialGradient id="hg2" cx="50%" cy="35%" r="65%">
-            <stop offset="0%" stop-color="#ff4d4d"/>
-            <stop offset="50%" stop-color="#cc0000"/>
-            <stop offset="100%" stop-color="#800000"/>
+          <radialGradient id="hg" cx="50%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#ff5555"/>
+            <stop offset="45%" stop-color="#cc0000"/>
+            <stop offset="100%" stop-color="#7a0000"/>
           </radialGradient>
-          <radialGradient id="shine2" cx="35%" cy="30%" r="40%">
-            <stop offset="0%" stop-color="rgba(255,255,255,0.5)"/>
+          <radialGradient id="hs" cx="35%" cy="28%" r="38%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.55)"/>
             <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
           </radialGradient>
         </defs>
-        <path d="M100 155 C60 125 10 95 10 55 C10 25 30 5 55 5 C70 5 85 15 100 30 C115 15 130 5 145 5 C170 5 190 25 190 55 C190 95 140 125 100 155Z" fill="url(#hg2)"/>
-        <path d="M100 155 C60 125 10 95 10 55 C10 25 30 5 55 5 C70 5 85 15 100 30 C115 15 130 5 145 5 C170 5 190 25 190 55 C190 95 140 125 100 155Z" fill="url(#shine2)"/>
-        <rect x="22" y="62" width="156" height="13" rx="6" fill="rgba(255,255,255,0.32)"/>
-        <rect x="18" y="81" width="164" height="13" rx="6" fill="rgba(255,255,255,0.32)"/>
-        <rect x="28" y="100" width="144" height="13" rx="6" fill="rgba(255,255,255,0.22)"/>
+        <path d="M100 158 C58 128 8 96 8 54 C8 24 28 4 53 4 C68 4 84 14 100 30 C116 14 132 4 147 4 C172 4 192 24 192 54 C192 96 142 128 100 158Z" fill="url(#hg)"/>
+        <path d="M100 158 C58 128 8 96 8 54 C8 24 28 4 53 4 C68 4 84 14 100 30 C116 14 132 4 147 4 C172 4 192 24 192 54 C192 96 142 128 100 158Z" fill="url(#hs)"/>
+        <rect x="20" y="64"  width="160" height="13" rx="6.5" fill="rgba(255,255,255,0.33)"/>
+        <rect x="16" y="83"  width="168" height="13" rx="6.5" fill="rgba(255,255,255,0.33)"/>
+        <rect x="26" y="102" width="148" height="12" rx="6"   fill="rgba(255,255,255,0.22)"/>
       </svg>
-
-      <span class="you-text">YOU</span>
-      <span class="jana-text">My Jana</span>
-    </div>
-  </div>
-
-  <!-- Girl photo bottom right -->
-  <!-- ============================================
-       YAHAN IMAGE CHANGE KARO — Girl face photo (bottom right)
-       Replace div with: <img src="images/girl-face.jpg" class="hero-girl-photo">
-       ============================================ -->
-  <div class="hero-girl-photo">
-    <div class="photo-placeholder">
-      <div class="icon">👧</div>
+      <div class="you-txt">YOU</div>
+      <div class="jana-txt">My Jana</div>
     </div>
   </div>
 </div>
 
-<!-- ========== SECTION 2 — POEM + PHOTOS ========== -->
-<div class="section">
-  <div class="section-bg"></div>
-  <div class="two-col">
+<!-- ========== SECTION 2: POEM 1 + WHITE GIRL OVERLAP + COUPLE ========== -->
+<div class="sec">
+  <div class="sec-bg" style="background-image:url('v19_94.png');"></div>
+  <div class="sec-in">
 
-    <!-- LEFT: Poem -->
-    <div class="poem-block reveal-left">
-      <p class="poem-line">
-        Bahut kuch kahna he aapse jana<br>
-        par kehnahi pate<br><br>
-        Aapke bina ye gujre pal me<br>
-        afjo me me baya kar nahi pate<br><br>
-        Aap bhele na kare bat hamse ,<br><br>
-        Par ham aapko yaad kiye bina<br>
-        rah nahi pate
-      </p>
-    </div>
+    <!-- Poem 1 on left, White girl overlap on right -->
+    <div class="row" style="align-items:center; margin-bottom:36px;">
+      <div class="col-p rvl">
+        <p class="poem" style="text-align:left;">Bahut kuch kahna he aapse jana par kehnahi pate
 
-    <!-- RIGHT: Photos -->
-    <div class="photo-block">
-      <!-- Girl in white dress -->
-      <!-- ============================================
-           YAHAN IMAGE CHANGE KARO — Girl white dress photo
-           <img src="images/girl-white.jpg" style="width:100%;border-radius:16px;">
-           ============================================ -->
-      <div class="photo-frame reveal-right" style="transition-delay:0.1s">
-        <div class="photo-placeholder">
-          <div class="icon">👗</div>
-          <div>Girl photo<br>(white dress)</div>
-        </div>
+Aapke bina ye gujre pal me afjo me me baya kar nahi pate
+
+Aap bhele na kare bat hamse ,
+
+Par ham aapko yaad kiye bina rah nahi pate</p>
       </div>
 
-      <!-- Girl + Boy together -->
-      <!-- ============================================
-           YAHAN IMAGE CHANGE KARO — Girl & Boy photo together
-           <img src="images/couple.jpg" style="width:100%;border-radius:16px;">
-           ============================================ -->
-      <div class="photo-frame reveal-right" style="transition-delay:0.2s; aspect-ratio:1">
-        <div class="photo-placeholder">
-          <div class="icon">👫</div>
-          <div>Girl & Boy<br>photo together</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="divider"></div>
-
-<!-- Poem 2 row -->
-<div class="section">
-  <div class="section-bg"></div>
-  <div class="two-col">
-    <div class="poem-block reveal-left">
-      <p class="poem-line">
-        duniya bhar ka najara ek akho ke aage<br>
-        magar enhe kuch nahi dekhta tere aage<br>
-        lakho he chahte , lakho he khvaab<br>
-        sab fike he teru mohobbat or tere aage<br><br>
-        wakt ka ata pata nahi ab mujko<br>
-        wakt ka ata pata nahi ab mujko<br>
-        ek jamana tha tere piche<br>
-        ek jamana he tere aage<br><br>
-        or kya hi mange magne vala use<br>
-        hire , moti , mahel or ye mosab<br>
-        sab bhika he tere aage
-      </p>
-    </div>
-
-    <!-- Instagram screenshot -->
-    <div class="photo-block reveal-right" style="transition-delay:0.15s">
-      <!-- ============================================
-           YAHAN IMAGE CHANGE KARO — Instagram screenshot (girl blue/floral)
-           Insta frame ke andar image daal do:
-           <img src="images/insta1.jpg">
-           ============================================ -->
-      <div class="insta-frame">
-        <div class="insta-header">
-          <div class="insta-avatar"></div>
-          <div>
-            <div class="insta-username">snehal_.215</div>
-            <div class="insta-location">Vadodara · B...</div>
+      <!-- White girl overlap -->
+      <div class="col-img rvr" style="padding-bottom:30px;">
+        <div class="overlap-wrap overlap-white" style="min-height:220px;">
+          <!-- Back: with background, smaller -->
+          <div class="photo-back">
+            <img src="IMG_20260309_152709.jpg" alt="girl with bg" >
+          </div>
+          <!-- Front: cutout, bigger, overlapping -->
+          <div class="photo-front">
+            <img src="IMG_20260309_152709.png" alt="girl cutout" style="width: 155%; margin-bottom: -20px ;margin-left: -90PX ;">
           </div>
         </div>
-        <div class="insta-img">
-          <div class="photo-placeholder" style="color:#aaa">
-            <div class="icon">📸</div>
-            <div style="font-size:0.65rem">Insta screenshot<br>(girl blue dress)</div>
-          </div>
-        </div>
-        <div class="insta-footer">
-          <div class="insta-likes">❤️ 89  💬 15</div>
-          <div class="insta-caption"><b>snehal_.215</b> Pretty, peaceful & glowing ✨<br>snehal_.215 🌸</div>
-        </div>
       </div>
     </div>
+
+    <!-- Boy + Girl combined photo — centered -->
+    <div class="rv" style="width:60%; margin:0 auto 36px;">
+      <img src="v22_3.png" class="photo-single" alt="boy and girl"/>
+    </div>
+
+    <!-- Poem 2 -->
+    <div class="rv">
+      <p class="poem">duniya bhar ka najara ek akho ke aage
+magar enhe kuch nahi dekhta tere aage
+lakho he chahte , lakho he khvaab
+sab fike he teru mohobbat or tere aage
+
+wakt ka ata pata nahi ab mujko
+wakt ka ata pata nahi ab mujko
+ek jamana tha tere piche
+ek jamana he tere aage
+
+or kya hi mange magne vala use
+hire , moti , mahel or ye mosab
+sab bhika he tere aage</p>
+    </div>
+
   </div>
 </div>
 
 <div class="divider"></div>
 
-<!-- ========== SECTION 3 — MORE POEM + INSTA ========== -->
-<div class="section">
-  <div class="section-bg"></div>
-  <div class="two-col reverse">
+<!-- ========== SECTION 3: POEM 3 + BLUE GIRL OVERLAP ========== -->
+<div class="sec">
+  <div class="sec-bg" style="background-image:url('v19_95.png');"></div>
+  <div class="sec-in">
 
-    <!-- LEFT: Poem -->
-    <div class="poem-block reveal-right">
-      <p class="poem-line">
-        aap himalay ki beti , me kelash ka sikhar ban jauga<br>
-        tere sath khade har tum me amar ban jauga<br>
-        tu gannga ban jana , jo shiv ke charno se behh jati he<br>
-        me vo jataa ban jauga jisme aapki tharaa shama jati he<br>
-        tu vrat ban jana me somvaar ban jauga<br>
-        teri har mano kam na ka uttar ban jauga<br>
-        jese shiv ke ben na Parvati adhuri he<br>
-        ase hi me aapke bina or aap hamre bena<br>
-        ye kahani adhuri he
-      </p>
-    </div>
+    <div class="row" style="align-items:center;">
+      <!-- Poem 3 left -->
+      <div class="col-p rvl">
+        <p class="poem" style="text-align:left;">aap himalay ki beti , me kelash ka sikhar ban jauga
+tere sath khade har tum me amar ban jauga
+tu gannga ban jana , jo shiv ke charno se behh jati he
+me vo jataa ban jauga jisme aapki tharaa shama jati he
+tu vrat ban jana me somvaar ban jauga
+teri har mano kam na ka uttar ban jauga
+jese shiv ke ben na Parvati adhuri he
+ase hi me aapke bina or aap hamre bena
+ye kahani adhuri he</p>
+      </div>
 
-    <!-- RIGHT: Insta screenshot 2 -->
-    <div class="photo-block reveal-left" style="transition-delay:0.1s">
-      <!-- ============================================
-           YAHAN IMAGE CHANGE KARO — Girl eyes closed photo
-           <img src="images/girl-eyes-closed.jpg">
-           ============================================ -->
-      <div class="insta-frame">
-        <div class="insta-header">
-          <div class="insta-avatar"></div>
-          <div>
-            <div class="insta-username">snehal_.215</div>
-            <div class="insta-location">Vadodara · B...</div>
+      <!-- Blue girl overlap right -->
+      <div class="col-img rvr" style="padding-bottom:30px;">
+        <div class="overlap-wrap overlap-blue" style="min-height:220px;">
+          <!-- Back: instagram screenshot with bg, smaller -->
+          <div class="photo-back">
+            <img src="v18_83.png" alt="girl blue bg" >
           </div>
-        </div>
-        <div class="insta-img">
-          <div class="photo-placeholder" style="color:#aaa">
-            <div class="icon">📸</div>
-            <div style="font-size:0.65rem">Girl photo<br>(eyes closed)</div>
+          <!-- Front: cutout bigger -->
+          <div class="photo-front">
+            <img src="v18_84.png" alt="girl blue cutout" style="width: 170%; margin-left: -60PX ; margin-bottom: 30%;">
           </div>
-        </div>
-        <div class="insta-footer">
-          <div class="insta-likes">❤️ 89  💬 15</div>
-          <div class="insta-caption"><b>snehal_.215</b> Pretty, peaceful & glowing ✨</div>
         </div>
       </div>
     </div>
+
   </div>
 </div>
 
 <div class="divider"></div>
 
-<!-- ========== SECTION 4 — LAST POEM + PURPLE PHOTO ========== -->
-<div class="section" style="padding-bottom: 60px;">
-  <div class="section-bg"></div>
-  <div class="two-col">
+<!-- ========== SECTION 4: PURPLE GIRL OVERLAP + POEM 4 ========== -->
+<div class="sec" style="padding-bottom:70px;">
+  <div class="sec-bg" style="background-image:url('v19_96.png');"></div>
+  <div class="sec-in">
 
-    <!-- LEFT: Insta screenshot purple -->
-    <div class="photo-block reveal-left">
-      <!-- ============================================
-           YAHAN IMAGE CHANGE KARO — Girl purple dress (Instagram)
-           <img src="images/girl-purple.jpg">
-           ============================================ -->
-      <div class="insta-frame">
-        <div class="insta-header">
-          <div class="insta-avatar"></div>
-          <div>
-            <div class="insta-username">snehal_.215</div>
-            <div class="insta-location">Vadodara · B...</div>
+    <div class="row" style="align-items:center;">
+      <!-- Purple girl overlap left -->
+      <div class="col-img rvl" style="padding-bottom:30px;">
+        <div class="overlap-wrap overlap-purple" style="min-height:240px;">
+          <!-- Back: instagram screenshot with bg, smaller -->
+          <div class="photo-back">
+            <img src="v19_90.png" alt="girl purple bg" >
+          </div>
+          <!-- Front: cutout bigger -->
+          <div class="photo-front" style="left:-8px; right:auto;">
+            <img src="v19_92.png" alt="girl purple cutout" style="margin-bottom: 15%; width: 150%; margin-left: -25px;">
           </div>
         </div>
-        <div class="insta-img">
-          <div class="photo-placeholder" style="color:#aaa">
-            <div class="icon">💜</div>
-            <div style="font-size:0.65rem">Girl photo<br>(purple dress)</div>
-          </div>
-        </div>
-        <div class="insta-footer">
-          <div class="insta-likes">❤️ 89  💬 15</div>
-          <div class="insta-caption"><b>snehal_.215</b> Pretty, peaceful & glowing ✨</div>
-        </div>
+      </div>
+
+      <!-- Poem 4 right -->
+      <div class="col-p rvr" style="transition-delay:0.1s;">
+        <p class="poem" style="text-align:right;">Na tere jesa chahiye na
+tujse behter chahiye
+lakho karodo ki bhid me bhi bas
+muje bas tu chahiye
+
+mile jo dard tumse me sahh luga
+par mere dard pe marham lagane ke liye
+bas muje tu chahiye
+
+agar tumse mohobbat karna agar galat he
+to muje iski saza chahiye
+lekin us saza baat bhi bas muje tu chahiye
+intajar kitana bhi karna pade par
+muje bas tu chahiye
+
+ha har pal har lamha har khadi
+muje bas tu chahiye</p>
       </div>
     </div>
 
-    <!-- RIGHT: Poem -->
-    <div class="poem-block reveal-right" style="transition-delay:0.1s">
-      <p class="poem-line">
-        Na tere jesa chahiye na<br>
-        tujse behter chahiye<br>
-        lakho karodo ki bhid me bhi bas<br>
-        muje bas tu chahiye<br><br>
-        mile jo dard tumse me sahh luga<br>
-        par mere dard pe marham lagane ke liye<br>
-        bas muje tu chahiye<br><br>
-        agar tumse mohobbat karna agar galat he<br>
-        to muje iski saza chahiye<br>
-        lekin us saza baat bhi bas muje tu chahiye<br>
-        intajar kitana bhi karna pade par<br>
-        muje bas tu chahiye<br><br>
-        ha har pal har lamha har khadi<br>
-        muje bas tu chahiye
-      </p>
-    </div>
   </div>
 </div>
 
 <script>
   // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.12 });
-  reveals.forEach(el => observer.observe(el));
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.rv,.rvl,.rvr').forEach(el => obs.observe(el));
 
   // Floating hearts
-  const heartsBg = document.getElementById('heartsBg');
-  const heartChars = ['❤️','💕','💗','💓','💖','💝','💞'];
+  const hw = document.getElementById('hw');
+  const hc = ['❤️','💕','💗','💓','💖','💝','💞'];
   for (let i = 0; i < 20; i++) {
     const h = document.createElement('span');
-    h.className = 'heart-float';
-    h.textContent = heartChars[Math.floor(Math.random() * heartChars.length)];
+    h.className = 'hf';
+    h.textContent = hc[Math.floor(Math.random() * hc.length)];
     h.style.left = Math.random() * 100 + '%';
     h.style.animationDelay = Math.random() * 8 + 's';
     h.style.animationDuration = (5 + Math.random() * 6) + 's';
-    h.style.fontSize = (0.7 + Math.random() * 1.1) + 'rem';
-    heartsBg.appendChild(h);
-  }
-
-  function logout() {
-    localStorage.removeItem('mylove_session');
-    window.location.href = 'login.html';
+    h.style.fontSize = (0.8 + Math.random() * 1.2) + 'rem';
+    hw.appendChild(h);
   }
 </script>
 </body>
